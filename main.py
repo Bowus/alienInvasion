@@ -8,6 +8,8 @@ from bullet import Bullet
 
 class AlienInvasion:
     """Overall class to manage game assets and behavior."""
+    def render_text(text, font, color):
+        return font.render(text, True, color)
 
     def __init__(self):
         """Initialize the game, and create game resources."""
@@ -30,7 +32,7 @@ class AlienInvasion:
             self.ship.update()
             self._update_bullets()
             self._update_screen()
-            self.clock.tick(300)
+            self.clock.tick(30)
 
     def _check_events(self):
         """Respond to keypresses and mouse events."""
@@ -63,7 +65,9 @@ class AlienInvasion:
     def _fire_bullet(self):
         """Create a new bullet and add it to the bullets group."""
         if len(self.bullets) < self.settings.bullets_allowed:
-            new_bullet = Bullet(self)
+            new_bullet = Bullet(self, 11)
+            self.bullets.add(new_bullet)
+            new_bullet = Bullet(self, -15)
             self.bullets.add(new_bullet)
 
     def _update_bullets(self):
@@ -83,7 +87,6 @@ class AlienInvasion:
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
         pygame.display.flip()
-
 
 if __name__ == '__main__':
     # Make a game instance, and run the game.
